@@ -11,26 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:base-devel
     steps:
-    - name: Checkout repository
+    - name: Checkout source
       uses: actions/checkout@v4
 
-    - name: Install required packages
+    - name: Set up non-root user
       run: |
-        pacman -Syu --noconfirm
-        pacman -S --noconfirm git base-devel
+        useradd -m builder
+        echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+        chown -R builder:builder .
 
-    - name: Make build directory
-      run: mkdir -p build
-
-    - name: Build all packages
+    - name: Build packages as builder
       run: |
+        mkdir -p build
         for dir in */; do
           [ "$dir" = "build/" ] && continue
           cp -r "$dir" build/
-          cd build/"$dir"
-          makepkg -fs --noconfirm
-          cd ../..
         done
+        sudo -u builder bash -c '
+          for dir in build/*; do
+            cd "$dir"
+            makepkg -fs --noconfirm
+            cd ../..
+          done
+        '
 
     - name: Prepare repo database
       run: |
