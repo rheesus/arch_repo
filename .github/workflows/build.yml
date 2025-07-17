@@ -13,9 +13,15 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Install base tools and pip
+    - name: Install base tools
       run: |
-        pacman -Sy --noconfirm git base-devel aurutils
+        pacman -Sy --noconfirm git base-devel
+
+    - name: Install aututils
+      run: |
+        git clone https://aur.archlinux.org/aurutils.git
+        cd aurutils
+        makepkg -si --noconfirm
 
     - name: Add builder user
       run: |
