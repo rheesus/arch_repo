@@ -16,7 +16,7 @@ depends=(
          'libglvnd' 'libjpeg' 'libpng'
          'libxkbcommon' 'pixman' 'polkit'
          'seatd' 'xorg-xwayland' 'wayland'
-         'wf-config-git' 'yyjson' 'libinput'
+         'wf-config' 'yyjson' 'libinput'
          'glib2' 'systemd-libs' 'libxcb'
 
          # Linking Wayfire headers now requires this
