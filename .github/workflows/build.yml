@@ -1,0 +1,50 @@
+name: Build and Deploy Arch Repo
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install required packages
+      run: |
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm git base-devel
+
+    - name: Make build directory
+      run: mkdir -p build
+
+    - name: Build all packages
+      run: |
+        for dir in */; do
+          cp -r "$dir" build/
+          cd build/"$dir"
+          makepkg -fs --noconfirm
+          cd ../..
+        done
+
+    - name: Prepare repo database
+      run: |
+        mkdir -p repo
+        cp build/*/*.pkg.tar.zst repo/
+        cd repo
+        repo-add repo.db.tar.gz *.pkg.tar.zst
+        mv repo.db.tar.gz repo.db
+        mv repo.files.tar.gz repo.files
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./repo
+        publish_branch: gh-pages
+        force_orphan: true
+
