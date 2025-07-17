@@ -60,7 +60,7 @@ jobs:
           if [[ -d "$pkg" && -f "$pkg/PKGBUILD" ]]; then
             echo "::group::Building $pkg"
             cd "$pkg"
-            sudo -u builder bash -c 'export PKGDEST=$PKGDEST SRCDEST=$SRCDEST BUILDDIR=$BUILDDIR; makepkg -fsi --noconfirm'
+            sudo -u builder env PKGDEST=$PKGDEST SRCDEST=$SRCDEST BUILDDIR=$BUILDDIR makepkg -sri --noconfirm
             cd ..
             echo "::endgroup::"
           fi
