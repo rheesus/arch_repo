@@ -17,21 +17,22 @@ jobs:
       run: |
         useradd -m builder
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-        mkdir -p /tmp/builddir /tmp/pkgdest
+        mkdir -p /tmp/builddir /tmp/pkgdest /tmp/srcdest
         chown -R builder:builder .
-        chown -R builder:builder /tmp/builddir /tmp/pkgdest
+        chown -R builder:builder /tmp/builddir /tmp/pkgdest /tmp/srcdest
 
     - name: Build packages as builder
       run: |
-        mkdir -p sources
+        mkdir -p pkgsrc
         for dir in */; do
-          [ "$dir" = "sources/" ] && continue
-          cp -r "$dir" sources/
+          [ "$dir" = "pkgsrc/" ] && continue
+          cp -r "$dir" pkgsrc/
         done
         sudo -u builder bash -c '
           export BUILDDIR=/tmp/builddir
           export PKGDEST=/tmp/pkgdest
-          for dir in sources/*; do
+          export SRCDEST=/tmp/srcdest
+          for dir in pkgsrc/*; do
             cd "$dir"
             makepkg -fs --noconfirm
             cd ../..
