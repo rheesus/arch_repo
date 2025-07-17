@@ -17,12 +17,6 @@ jobs:
       run: |
         pacman -Sy --noconfirm git base-devel
 
-    - name: Install aututils
-      run: |
-        git clone https://aur.archlinux.org/aurutils.git
-        cd aurutils
-        makepkg -si --noconfirm
-
     - name: Add builder user
       run: |
         useradd -m builder
@@ -49,6 +43,12 @@ jobs:
     - name: Configure local repo
       run: |
         echo -e "[localrepo]\nSigLevel = Optional TrustAll\nServer = file:///tmp/pkgdest" >> /etc/pacman.conf
+
+    - name: Install aututils
+      run: |
+        git clone https://aur.archlinux.org/aurutils.git
+        cd aurutils
+        makepkg -si --noconfirm
 
     - name: Build packages in dependency order
       run: |
