@@ -15,7 +15,7 @@ jobs:
 
     - name: Install base tools
       run: |
-        pacman -Sy --noconfirm git base-devel
+        pacman -Syu --noconfirm git base-devel
 
     - name: Add builder user
       run: |
