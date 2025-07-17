@@ -7,7 +7,7 @@ arch=('x86_64')
 url="https://github.com/WayfireWM/wf-config"
 license=('MIT')
 depends=('libevdev' 'libxml2')
-makedepends=('git' 'wlroots' 'meson' 'ninja' 'wayland-protocols' 
+makedepends=('git' 'wlroots0.18' 'meson' 'ninja' 'wayland-protocols' 
 	          'glm' 'doctest' 'cmake')
 provides=("wf-config=0.4.0")
 conflicts=("${pkgname%}")
