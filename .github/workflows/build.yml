@@ -17,18 +17,18 @@ jobs:
       run: |
         pacman -Sy --noconfirm git base-devel
 
-    - name: Install aututils
-      run: |
-        git clone https://aur.archlinux.org/aurutils.git
-        chown -R builder:builder aurutils
-        sudo -u builder bash -c 'cd aurutils && makepkg -si --noconfirm'
-
     - name: Add builder user
       run: |
         useradd -m builder
         echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         mkdir -p /tmp/builddir /tmp/pkgdest /tmp/srcdest
         chown -R builder:builder . /tmp/builddir /tmp/pkgdest /tmp/srcdest
+
+    - name: Install aututils
+      run: |
+        git clone https://aur.archlinux.org/aurutils.git
+        chown -R builder:builder aurutils
+        sudo -u builder bash -c 'cd aurutils && makepkg -si --noconfirm'
 
     - name: Restore package cache
       uses: actions/cache@v3
