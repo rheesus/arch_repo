@@ -46,9 +46,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-srcdest-
 
-    - name: Configure local repo
-      run: |
-        echo -e "[localrepo]\nSigLevel = Optional TrustAll\nServer = file:///tmp/pkgdest" >> /etc/pacman.conf
+    # - name: Configure local repo
+    #   run: |
+    #     echo -e "[localrepo]\nSigLevel = Optional TrustAll\nServer = file:///tmp/pkgdest" >> /etc/pacman.conf
 
     - name: Build packages in dependency order
       run: |
