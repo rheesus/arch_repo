@@ -78,28 +78,28 @@ jobs:
       uses: actions/cache/save@v3
       with:
         path: /tmp/pkgdest
-        key: ${{ runner.os }}-pkgdest-${{ hashFiles('**/PKGBUILD') }}
+        key: ${{ runner.os }}-pkgdest-${{ hashFiles('**/PKGBUILD') }}-pkgdest
 
     - name: Save build cache
       uses: actions/cache/save@v3
       with:
         path: /tmp/builddir
-        key: ${{ runner.os }}-builddir-${{ hashFiles('**/PKGBUILD') }}
+        key: ${{ runner.os }}-builddir-${{ hashFiles('**/PKGBUILD') }}-builddir
 
     - name: Save source cache
       uses: actions/cache/save@v3
       with:
         path: /tmp/srcdest
-        key: ${{ runner.os }}-srcdest-${{ hashFiles('**/PKGBUILD') }}
+        key: ${{ runner.os }}-srcdest-${{ hashFiles('**/PKGBUILD') }}-srcdest
 
     - name: Prepare repo database
       run: |
         mkdir -p repo
         cp /tmp/pkgdest/*.pkg.tar.zst repo/
         cd repo
-        repo-add repo.db.tar.gz *.pkg.tar.zst
-        mv repo.db.tar.gz repo.db
-        mv repo.files.tar.gz repo.files
+        repo-add rheesus-repo.db.tar.gz *.pkg.tar.zst
+        mv rheesus-repo.db.tar.gz rheesus-repo.db
+        mv rheesus-repo.files.tar.gz rheesus-repo.files
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
