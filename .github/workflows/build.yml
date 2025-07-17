@@ -49,6 +49,9 @@ jobs:
         mv repo.db.tar.gz repo.db
         mv repo.files.tar.gz repo.files
 
+    - name: Install git (required by gh-pages deploy)
+      run: pacman -Sy --noconfirm git
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
