@@ -1,4 +1,4 @@
-name: Build and Deploy Arch Wayfire Repo
+name: Build and Deploy Personal Arch Repo
 
 on:
   push:
