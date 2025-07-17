@@ -56,7 +56,7 @@ jobs:
         export SRCDEST=/tmp/srcdest
         export BUILDDIR=/tmp/builddir
 
-        ./build-order.sh | awk '{print $1}' | while read pkg; do
+        ./scripts/build-order.sh | awk '{print $1}' | while read pkg; do
           if [[ -d "$pkg" && -f "$pkg/PKGBUILD" ]]; then
             echo "::group::Building $pkg"
             cd "$pkg"
