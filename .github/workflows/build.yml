@@ -15,11 +15,7 @@ jobs:
 
     - name: Install base tools and pip
       run: |
-        pacman -Sy --noconfirm git base-devel python python-pip
-
-    - name: Install makedepends-tree
-      run: |
-        pip install git+https://github.com/eli-schwartz/pkgtools.git
+        pacman -Sy --noconfirm git base-devel aurutils
 
     - name: Add builder user
       run: |
