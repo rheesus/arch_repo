@@ -1,0 +1,30 @@
+# Maintainer: rheesus <tpmmiv@gmail.com>
+pkgname='hello-world'
+pkgver='1.0.0'
+pkgrel=1
+pkgdesc="prints hello world"
+arch=('x86_64')
+url="https://python.org"
+license=('MIT')
+depends=('python>=3.0.0')
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=('hello-world')
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("hello_world.py")
+noextract=()
+sha256sums=("SKIP")
+validpgpkeys=()
+
+
+
+package() {
+	ls;
+	install -Dm755 "$srcdir/hello_world.py" "$pkgdir/usr/bin/hello_world"
+}
