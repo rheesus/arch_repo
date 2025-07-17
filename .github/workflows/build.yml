@@ -47,8 +47,8 @@ jobs:
     - name: Install aututils
       run: |
         git clone https://aur.archlinux.org/aurutils.git
-        cd aurutils
-        makepkg -si --noconfirm
+        chown -R builder:builder aurutils
+        sudo -u builder bash -c 'cd aurutils && makepkg -si --noconfirm'
 
     - name: Build packages in dependency order
       run: |
